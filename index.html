@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Tết 2026 – 12A12</title>
+
+    <!-- FAVICON (tùy bạn đổi file) -->
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon.png" />
+    <meta name="theme-color" content="#b10000" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        user-select: none;
+      }
+
+      /* ===================== COUNTDOWN ===================== */
+      #countdownScene {
+        position: fixed;
+        inset: 0;
+        background: #b10000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        transition: opacity 1s;
+      }
+
+      .branch {
+        position: absolute;
+        width: 32%;
+        animation: sway 3s infinite ease-in-out;
+      }
+      .left {
+        left: 0;
+        top: 0;
+      }
+      .right {
+        right: 0;
+        top: 0;
+      }
+
+      .lantern {
+        position: absolute;
+        width: 14%;
+        animation: swing 2.4s infinite ease-in-out;
+      }
+      .lanternLeft {
+        left: 5%;
+        top: 12%;
+      }
+      .lanternRight {
+        right: 5%;
+        top: 12%;
+      }
+
+      #yearHorse {
+        width: 45%;
+        margin-bottom: 10px;
+        animation: fadein 1.2s ease-in;
+      }
+
+      #logoClass {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 12%;
+      }
+
+      #countNumber {
+        font-size: 9vw;
+        font-weight: 900;
+        color: #ffe98a;
+        text-shadow:
+          0 0 20px gold,
+          0 0 40px orange;
+      }
+
+      @keyframes sway {
+        0% {
+          transform: rotate(0);
+        }
+        50% {
+          transform: rotate(3deg);
+        }
+        100% {
+          transform: rotate(0);
+        }
+      }
+      @keyframes swing {
+        0% {
+          transform: rotate(-3deg);
+        }
+        50% {
+          transform: rotate(3deg);
+        }
+        100% {
+          transform: rotate(-3deg);
+        }
+      }
+      @keyframes fadein {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* ===================== FIREWORK ===================== */
+      #container {
+        position: fixed;
+        inset: 0;
+        background: black;
+        display: none;
+        z-index: 50;
+      }
+
+      /* ===================== LÌ XÌ ===================== */
+      #lixiScene {
+        position: fixed;
+        inset: 0;
+        background: #b10000;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 900;
+      }
+
+      #lixi {
+        width: 280px;
+        height: 420px;
+        position: relative;
+        animation: popIn 1.2s ease-out forwards;
+      }
+
+      .lid {
+        width: 100%;
+        height: 35%;
+        background: #c40000;
+        border-bottom: 6px solid gold;
+        border-radius: 0 0 18px 18px;
+        position: absolute;
+        top: 0;
+        transform-origin: top center;
+        animation: openLid 2s ease forwards;
+        animation-delay: 1.2s;
+      }
+
+      .body {
+        width: 100%;
+        height: 70%;
+        background: #d10000;
+        border-top: 6px solid gold;
+        border-radius: 0 0 20px 20px;
+        position: absolute;
+        bottom: 0;
+      }
+
+      #card {
+        width: 230px;
+        height: 310px;
+        background: #fff4cc;
+        border: 4px solid gold;
+        border-radius: 12px;
+        position: absolute;
+        left: 25px;
+        top: 70px;
+        opacity: 0;
+        transform: translateY(120px);
+        animation: cardOut 1.5s ease forwards;
+        animation-delay: 2s;
+        text-align: center;
+        padding: 12px;
+      }
+
+      #banhchung {
+        width: 80px;
+      }
+
+      .wish {
+        margin-top: 10px;
+        color: #b20000;
+        font-size: 17px;
+        text-shadow: 0 0 10px gold;
+      }
+
+      @keyframes popIn {
+        from {
+          transform: scale(0.5);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      @keyframes openLid {
+        from {
+          transform: rotate(0);
+        }
+        to {
+          transform: rotate(-70deg);
+        }
+      }
+      @keyframes cardOut {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ===================== MUTE BUTTON ===================== */
+      #muteBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 14px;
+        background: gold;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        z-index: 9999;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="muteBtn">Tắt âm</button>
+
+    <!-- COUNTDOWN -->
+    <div id="countdownScene">
+      <img src="branch.png" class="branch left" />
+      <img src="branch2.png" class="branch right" />
+
+      <img src="lantern.png" class="lantern lanternLeft" />
+      <img src="lantern.png" class="lantern lanternRight" />
+
+      <img src="2026-horse.png" id="yearHorse" />
+      <img src="logo12A12.png" id="logoClass" />
+
+      <div id="countNumber">00:05</div>
+    </div>
+
+    <!-- FIREWORK CANVAS -->
+    <div id="container"></div>
+
+    <!-- LÌ XÌ -->
+    <div id="lixiScene">
+      <div id="lixi">
+        <div class="lid"></div>
+        <div class="body"></div>
+
+        <div id="card">
+          <img id="banhchung" src="banhchung.png" />
+          <p class="wish">
+            Tập thể lớp 12A12 kính chúc quý thầy cô<br />
+            một năm mới <b>An khang – Thịnh vượng – Sức khỏe dồi dào</b>,<br />
+            luôn giữ mãi ngọn lửa nhiệt huyết để tiếp tục<br />
+            dẫn dắt chúng em trên con đường tri thức.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AUDIO -->
+    <audio id="fireLaunch" src="launch.mp3"></audio>
+    <audio id="fireBoom" src="boom.mp3"></audio>
+
+    <!-- NHẠC NỀN TẾT -->
+    <audio id="bgm" src="tet-music.mp3" loop></audio>
+
+    <script>
+      /* ============================================================
+   BẬT ÂM TỰ ĐỘNG SAU KHI CHẠM MÀN HÌNH
+============================================================ */
+      let audioEnabled = false;
+      function enableAudio() {
+        if (!audioEnabled) {
+          document.getElementById("bgm").volume = 0.25;
+          document.getElementById("bgm").play();
+
+          document.getElementById("fireLaunch").volume = 1;
+          document.getElementById("fireBoom").volume = 1;
+
+          audioEnabled = true;
+        }
+      }
+      document.addEventListener("click", enableAudio);
+      document.addEventListener("touchstart", enableAudio);
+
+      /* ============================================================
+   NÚT TẮT ÂM
+============================================================ */
+      document.getElementById("muteBtn").onclick = () => {
+        const bgm = document.getElementById("bgm");
+        const launch = document.getElementById("fireLaunch");
+        const boom = document.getElementById("fireBoom");
+
+        bgm.muted = launch.muted = boom.muted = true;
+        document.getElementById("muteBtn").innerText = "Âm đã tắt";
+      };
+
+      /* ============================================================
+   COUNTDOWN
+============================================================ */
+      let count = 5;
+      const countdownScene = document.getElementById("countdownScene");
+      const countNum = document.getElementById("countNumber");
+      const fireContainer = document.getElementById("container");
+      const lixiScene = document.getElementById("lixiScene");
+
+      countNum.textContent = "00:05";
+
+      let timer = setInterval(() => {
+        count--;
+        countNum.textContent = "00:0" + count;
+
+        if (count === 0) {
+          clearInterval(timer);
+          countdownScene.style.opacity = "0";
+
+          setTimeout(() => {
+            countdownScene.style.display = "none";
+            startFireworks();
+          }, 1000);
+        }
+      }, 1000);
+
+      /* ============================================================
+   FIREWORK ENGINE (NỔ TO)
+============================================================ */
+      class Particle {
+        constructor(x, y, color) {
+          this.x = x;
+          this.y = y;
+
+          this.speedX = Math.random() * 10 - 5;
+          this.speedY = Math.random() * 10 - 5;
+
+          this.gravity = 0.03;
+          this.color = color;
+
+          this.life = 90;
+        }
+
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          this.speedY += this.gravity;
+          this.life--;
+        }
+
+        draw(ctx) {
+          ctx.globalAlpha = this.life / 90;
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      }
+
+      class Firework {
+        constructor(width, height) {
+          this.x = Math.random() * width;
+          this.y = height;
+
+          this.targetY = Math.random() * height * 0.4 + 80;
+          this.speed = 5 + Math.random() * 3;
+          this.color = `hsl(${Math.random() * 360},100%,60%)`;
+
+          this.exploded = false;
+          this.particles = [];
+        }
+
+        update(audio) {
+          if (!this.exploded) {
+            this.y -= this.speed;
+
+            if (this.y <= this.targetY) {
+              this.exploded = true;
+              audio.play();
+
+              for (let i = 0; i < 140; i++) {
+                this.particles.push(new Particle(this.x, this.y, this.color));
+              }
+            }
+          } else {
+            this.particles.forEach((p) => p.update());
+          }
+        }
+
+        draw(ctx) {
+          if (!this.exploded) {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 4, 0, Math.PI * 2);
+            ctx.fill();
+          } else {
+            this.particles.forEach((p) => p.draw(ctx));
+          }
+        }
+      }
+
+      /* ============================================================
+   FIREWORKS LOOP + CHUYỂN CẢNH
+============================================================ */
+      let fireworks = [];
+      let canvas, ctx;
+
+      function startFireworks() {
+        canvas = document.createElement("canvas");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        fireContainer.appendChild(canvas);
+        ctx = canvas.getContext("2d");
+
+        fireContainer.style.display = "block";
+
+        const launch = document.getElementById("fireLaunch");
+        const boom = document.getElementById("fireBoom");
+
+        let bursts = 0;
+
+        let interval = setInterval(() => {
+          launch.play();
+
+          let amount = 2 + Math.floor(Math.random() * 2);
+          for (let i = 0; i < amount; i++) {
+            fireworks.push(new Firework(canvas.width, canvas.height));
+          }
+
+          bursts++;
+
+          if (bursts > 12) {
+            clearInterval(interval);
+
+            setTimeout(() => {
+              fireContainer.style.opacity = "0";
+
+              setTimeout(() => {
+                fireContainer.style.display = "none";
+                lixiScene.style.display = "flex";
+              }, 1200);
+            }, 3000);
+          }
+        }, 700);
+
+        animate();
+      }
+
+      function animate() {
+        if (!ctx) return;
+
+        ctx.fillStyle = "rgba(0,0,0,0.28)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const boom = document.getElementById("fireBoom");
+
+        fireworks.forEach((fw) => {
+          fw.update(boom);
+          fw.draw(ctx);
+        });
+
+        fireworks = fireworks.filter(
+          (fw) => fw.exploded === false || fw.particles.some((p) => p.life > 0),
+        );
+
+        requestAnimationFrame(animate);
+      }
+    </script>
+  </body>
+</html>
